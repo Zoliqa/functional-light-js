@@ -1,5 +1,6 @@
-import { compose, match, pipe } from 'ramda';
+import { compose, match, pipe, partial, partialRight, prop, curry } from 'ramda';
 import { log, compose as compose2, composeMultiArgs } from './util';
+import $ from 'jquery';
 
 const words = str => String(str)
     .toLowerCase()
@@ -53,11 +54,11 @@ console.log(piped(text));
 
 const composed2 = compose(skipShortWords, unique, words);
 
-composed2(text).log();
+console.log(composed2(text));
 
 const composed3 = compose2(skipShortWords, unique, words);
 
-composed3(text).log('composed2');
+console.log('composed3', composed3(text));
 
 const f = (x, y) => x + y;
 
@@ -65,4 +66,33 @@ const g = x => 2 * x;
 
 const composed4 = composeMultiArgs(g, f);
 
-composed4(1, 2).log('composed2');
+console.log('composed2', composed4(1, 2));
+
+console.log('--------------------------------------------');
+
+// $.getJSON('http://localhost:3000/users', { id: 1 }, function(result) {
+//     console.log(result);
+// });
+
+// $.getJSON('http://localhost:3000/orders', { id: -1 }, function(result) {
+//     console.log(result); 
+// });
+
+const getPerson = partial($.getJSON, ['http://localhost:3000/users']);
+const getLastOrder = partial($.getJSON, ['http://localhost:3000/orders', { id: -1 }]);
+
+const makeObjProp = (name, value) => {
+    const o = {};
+
+    o[name] = value;
+
+    return o;
+};
+
+const printPersonName = compose(log, prop('name'));
+const processPerson = partialRight(getPerson, [printPersonName]);
+const lookupPerson = compose(processPerson, curry(makeObjProp)('id'), prop('personId'));
+
+getLastOrder(lookupPerson);
+
+console.log('--------------------------------------------');

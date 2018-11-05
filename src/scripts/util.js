@@ -31,14 +31,14 @@ const spreadArgProps = (
         .map(v => v.replace( /[=\s].*$/, "" ) )
 ) => argsObj => fn(...propOrder.map(k => argsObj[k]));
 
-Object.prototype.log = function(tag) { 
-    if (tag) {
-        console.log(tag, this);
-    }
-    else {
-       console.log(this);
-    } 
-};
+// Object.prototype.log = function(tag) { 
+//     if (tag) {  
+//         console.log(tag, this);
+//     }
+//     else {
+//        console.log(this);
+//     } 
+// };
 
 const compose = (...fns) => result => [...fns].reverse().reduce((result, fn) => fn(result), result);
 
@@ -49,6 +49,8 @@ function composeMultiArgs(...fns) {
         };
     } );
 }
+
+const log = x => console.log(x);
 
 export {
     spreadArgs,

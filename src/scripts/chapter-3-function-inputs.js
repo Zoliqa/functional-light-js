@@ -9,6 +9,7 @@ console.log('--------------------------------------------');
 
 var words = ' alma a fa alatt '.split(/\s|\b/).filter(identity);
 
+' alma a fa alatt '.split(/\s|\b/).log();
 console.log(words);
 
 console.log('--------------------------------------------');
@@ -120,7 +121,7 @@ console.log('--------------------------------------------');
 var printIfU = uncurryN(2, partialRight(when, [output]));
 
 var msg1 = "Hello";
-var msg2 = msg1 + " World";
+var msg2 = msg1 + " World...";
 
 printIfU(isShortEnough, msg1);         
 printIfU(isShortEnough, msg2);

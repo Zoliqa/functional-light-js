@@ -4,7 +4,9 @@
   "description": "A light foundation for your next frontend project based on webpack.",
   "scripts": {
     "build": "webpack --config webpack/webpack.config.prod.js  --colors",
-    "start": "webpack-dev-server --open --config webpack/webpack.config.dev.js"
+    "start-server": "node ./src/backend/index.js",
+    "start-webpack": "webpack-dev-server --open --config webpack/webpack.config.dev.js",
+    "start": "concurrently --kill-others \"npm run start-server\" \"npm run start-webpack\""
   },
   "repository": {
     "type": "git",
@@ -30,6 +32,7 @@
     "@babel/preset-env": "^7.1.0",
     "babel-loader": "^8.0.4",
     "clean-webpack-plugin": "^0.1.19",
+    "concurrently": "^4.0.1",
     "copy-webpack-plugin": "^4.5.4",
     "css-loader": "^1.0.0",
     "eslint": "^5.7.0",
@@ -47,6 +50,8 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
-    "ramda": "^0.25.0"
+    "jquery": "^3.3.1",
+    "ramda": "^0.25.0",
+    "server": "^1.0.18"
   }
 }
